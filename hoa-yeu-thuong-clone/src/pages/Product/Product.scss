@@ -1,0 +1,23 @@
+.product{
+    margin-top: 16px;
+    width: 100%;
+    &-info {
+        &__text {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.id {
+    color: #39ab49;
+}
+
+.old-price {
+    text-decoration: line-through;
+}
+
+.price {
+    color: #c00;
+    font-weight: 500;
+}

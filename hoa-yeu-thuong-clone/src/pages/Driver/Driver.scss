@@ -1,0 +1,57 @@
+.driver {
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+
+      &__btn {
+        padding: 5px;
+
+        &--container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        &--wrapper {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            font-size: 13px;
+            color: #008848;
+            border: 1px solid #008848;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: 0.3s;
+
+        }
+        
+        &__item {
+            height: 100%;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #008848;
+            &:hover {
+                
+                    color: aliceblue;
+                background-color: #008848;
+    
+            }
+
+        }
+    }
+}

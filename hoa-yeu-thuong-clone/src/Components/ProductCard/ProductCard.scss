@@ -1,0 +1,67 @@
+.prodcut-card--container{
+    border: 1px #C1C1C1 solid;
+    min-width: 200px;
+}   
+
+.prodcut-card {
+    &__img--wrapper{
+        width: 100%;
+        img {
+            aspect-ratio: 4/5;
+            object-fit: contain
+        }
+    }
+
+    &__name {
+        color: black;
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    &__info{
+        color: gray;
+        font-size: 12px;
+    }
+    
+    &__price {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        
+
+        &__old {
+            text-decoration: line-through;
+            padding: 0 5px;
+        }
+
+        &__new {
+            color: #bd2026;
+            padding: 0 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+    }
+
+    &__btn {
+        padding: 5px;
+        &--wrapper {
+            font-size: 13px;
+            color: #008848;
+            border: 1px solid #008848;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 10px 0;
+            transition: 0.3s;
+
+            &:hover {
+                
+                    color: aliceblue;
+                background-color: #008848;
+    
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Boom-chill",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "msnodesqlv8": "^2.4.1",
+    "mssql": "^7.2.1",
+    "nodemon": "^2.0.14",
+    "prebuild-install": "^6.1.4"
+  }
+}

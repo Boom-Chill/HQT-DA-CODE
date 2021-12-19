@@ -1,0 +1,117 @@
+.navbar {
+    width: 100vw;
+    background-color: #e8e8e8;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    &-header--container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 52px;
+        width: 100vw;
+        background-color: #464646;
+
+        .navbar-header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+    
+            &__account {
+                color: white;
+                font-size: 14px;
+                margin-right: 10px;
+                border-right: solid 2px white;
+                position: relative;
+                padding-right: 20px;
+
+                &:hover{
+                    color: #fcb040;
+                }
+
+
+                svg {
+                    position: absolute;
+                    font-size: 16px;
+                    right: 3px;
+                    top: 4px;
+                }
+
+            }
+
+            &__card {
+                color: #fcb040;
+                font-size: 16px;
+
+                position: relative;
+                padding-left: 24px;
+
+
+                svg {
+                    position: absolute;
+                    font-size: 20px;
+                    left: 0;
+                    top: 1px;
+                }
+            }
+        }
+    }
+
+    &-banner {
+        padding: 1em 0em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+
+        &__search{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            input {
+                width: 100%;
+                outline: none;
+                height: 30px;
+                border-radius: 13px;
+                border: 1px solid #a9a9a9;
+            }
+    
+            svg {
+                font-size: 50px;
+                position: absolute;
+                right: 8px;
+                top: 8px;
+            }
+        }
+    }
+    &-menu--container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        border-bottom: 1px solid #C1C1C1;
+        border-top: 1px solid #C1C1C1;
+        background-color: rgb(244, 244, 244);
+        .navbar-menu {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            &__item {
+                font-weight: 600;
+                font-size: 13px;
+                line-height: 40px;
+                margin: 0px 13px;
+                height: 40px;
+                cursor: pointer;
+                &:hover {
+                    color:#bd2026 ;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+.custom-from__input{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    input {
+        width: 100%;
+        max-width: 12em;
+        padding-left: 0.3em;
+        font-size: 20px;
+        border: solid 1px #C1C1C1;
+    }
+    
+    input[type=text]:disabled {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    input[type=checkbox] {
+        width: 20px;
+        height: 20px;
+        border: solid 1px #C1C1C1;
+    }
+
+    input[type=checkbox]:disabled {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    select {
+        font-size: 20px;
+        //height: 40px;
+        border: solid 1px #C1C1C1;
+        width: 100%;
+        max-width: 12em;
+    }
+    select::-ms-expand { display: none; }
+    
+    .custom-from__input-label {
+        font-size: 20px;
+        margin-bottom: 0.2em;
+        font-weight: 500;
+    }   
+}
