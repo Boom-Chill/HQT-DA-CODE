@@ -26,16 +26,11 @@ function Staff(props) {
 
     const [partners, setPartners] = useState([])
     const [partnerInfo, setPartnerInfo] = useState({})
-    console.log("🚀 ~ file: Staff.jsx ~ line 29 ~ Staff ~ partnerInfo", partnerInfo)
 
 
     useEffect(() => {
         try {
-            axios.get(`${baseUrl}/api/contracts`, {
-                params: {
-                    id: user.info.TAIXEID,
-                }
-            }).then(
+            axios.get(`${baseUrl}/api/contracts`).then(
                 (res) => dispatch(addContracts(res.data))
             )
         } catch (error) {
@@ -60,7 +55,7 @@ function Staff(props) {
         } catch (error) {
             console.log(error)
         }
-    }, [reload])
+    }, [])
 
     useEffect(() => {
         try {
@@ -79,16 +74,16 @@ function Staff(props) {
     const onSubmit = (data) => {
         submitTrigger()
         if (!isError) {
-            if (!fixed) {
-                axios.post(`${baseUrl}/api/test6-staff-add`, {
-                    ...data,
-                    DAIDIEN: partnerInfo.DAIDIEN
-                }).then(
-                    (res) => {
-                        dispatch(addContracts(res.data))
-                    }
-                )
-            }
+
+            axios.post(`${baseUrl}/api/test6-staff-add`, {
+                ...data,
+                DAIDIEN: partnerInfo.DAIDIEN
+            }).then(
+                (res) => {
+                    dispatch(addContracts(res.data))
+                }
+            )
+
         }
     }
 
@@ -97,6 +92,7 @@ function Staff(props) {
         if (!fixed) {
             axios.get(`${baseUrl}/api/test6-staff-view`).then(
                 (res) => {
+                    console.log(res.data)
                     dispatch(addContracts(res.data))
                     setLoad(false)
                 }
@@ -104,6 +100,7 @@ function Staff(props) {
         } else {
             axios.get(`${baseUrl}/api/test6-staff-view-fix`).then(
                 (res) => {
+                    console.log(res.data)
                     dispatch(addContracts(res.data))
                     setLoad(false)
                 }

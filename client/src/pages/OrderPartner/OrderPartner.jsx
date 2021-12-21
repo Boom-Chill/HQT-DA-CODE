@@ -18,6 +18,8 @@ function OrderPartner(props) {
 
     const [fixed, setFixed] = useState(false)
 
+    const [delay, setDelay] = useState(false)
+
     useEffect(() => {
         try {
             axios.get(`${baseUrl}/api/partner/orders`, {
@@ -36,6 +38,7 @@ function OrderPartner(props) {
         if (!fixed) {
 
             try {
+                setDelay(true)
                 await axios.get(`${baseUrl}/api/test1-partner`, {
                     params: {
                         id: id,
@@ -48,13 +51,17 @@ function OrderPartner(props) {
                         id: user.info.DOITACID,
                     }
                 }).then(
-                    (res) => setOrders(res.data)
+                    (res) => {
+                        setOrders(res.data)
+                        setDelay(false)
+                    }
                 )
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
+                setDelay(true)
                 await axios.get(`${baseUrl}/api/test1-partner-fix`, {
                     params: {
                         id: id,
@@ -67,8 +74,10 @@ function OrderPartner(props) {
                         id: user.info.DOITACID,
                     }
                 }).then(
-                    (res) => setOrders(res.data)
-                )
+                    (res) => {
+                        setOrders(res.data)
+                        setDelay(false)
+                    })
             } catch (error) {
                 console.log(error)
             }
@@ -126,6 +135,7 @@ function OrderPartner(props) {
 
             <div className='driver__btn--container' style={{ alignItems: 'end' }}>
                 <TextInput
+                    style={{ marginRight: '16px' }}
                     label='Mã đơn hàng'
                     onChange={(e) => setId(e.value)}
                 />
@@ -139,7 +149,7 @@ function OrderPartner(props) {
                         onClick={(e) => handleUpdateInvoice()}
 
                     >
-                        sửa
+                        {!delay ? 'sửa' : 'Đang sửa'}
                     </div>
                 </div>
             </div>

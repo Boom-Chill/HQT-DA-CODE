@@ -11,10 +11,10 @@ import { AiOutlineSearch } from "react-icons/ai";
 import '../../all.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { baseUrl } from './../../constants/url';
-import { addProducts, addSearch } from '../../feature/productsSlice';
 import axios from 'axios'
 import { deleteUser } from '../../feature/userSlice';
-import { TextInput, FormManager } from './../CustomForm/CustomForm';
+import { TextInput, FormManager, CheckBoxInput } from './../CustomForm/CustomForm';
+import { addPartners } from '../../feature/searchPartners';
 
 function Navbar(props) {
 
@@ -22,17 +22,45 @@ function Navbar(props) {
     const [search, setSearch] = useState('')
     const history = useHistory()
     const user = useSelector((state) => state.user.data)
+    const [fixed, setFixed] = useState(false)
+    const [delay, setDelay] = useState(false)
 
     const handleSearchProduct = () => {
-        try {
-            axios.get(`${baseUrl}/api/test6-search`, {
-                params: {
-                    city: watch('THANHPHO'),
-                    type: watch('LOAI'),
-                }
-            }).then((res) => console.log(res.data))
-        } catch (error) {
-            console.log(error)
+        if (!fixed) {
+            setDelay(true)
+            try {
+                axios.get(`${baseUrl}/api/test5-search`, {
+                    params: {
+                        city: watch('THANHPHO'),
+                        type: watch('LOAI'),
+                    }
+                }).then((res) => {
+
+                    dispatch(addPartners(res.data))
+                    setDelay(false)
+
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        else {
+            setDelay(true)
+            try {
+                axios.get(`${baseUrl}/api/test5-search-fix`, {
+                    params: {
+                        city: watch('THANHPHO'),
+                        type: watch('LOAI'),
+                    }
+                }).then((res) => {
+
+                    dispatch(addPartners(res.data))
+                    setDelay(false)
+
+                })
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
@@ -76,6 +104,13 @@ function Navbar(props) {
             <div className='wide navbar-banner'>
 
                 <div className="navbar-banner__search wide">
+
+                    <CheckBoxInput
+                        label='Fixed unrepeatable read 2'
+                        defaultChecked={fixed}
+                        onChange={(e) => setFixed(e.value)}
+                    />
+
                     <TextInput
                         label='thành phố'
                         name='THANHPHO'
@@ -95,7 +130,7 @@ function Navbar(props) {
                         <div
                             onClick={() => handleSearchProduct()}
                         >
-                            <AiOutlineSearch />
+                            {!delay ? <AiOutlineSearch /> : <div class="loader"></div>}
                         </div>
                     </Link>
                 </div>
@@ -176,7 +211,7 @@ function Navbar(props) {
                             user?.type == 'KH'
                                 ? <Link to={'/customer'}>
                                     <div className='navbar-menu__item'>
-                                        TEST 2
+                                        XEM CHI SẢN PHẨM THEO CHI NHÁNH
                                     </div>
                                 </Link>
                                 : ''

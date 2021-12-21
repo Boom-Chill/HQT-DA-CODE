@@ -1,5 +1,5 @@
 
-const localUrl = 'http://localhost:5000'
+const localUrl = 'http://localhost:5001'
 const publicIP = '116.98.73.164'
 export const baseWideUrl = `http://${publicIP}:5000`
 export const baseWideUri = `${baseWideUrl}/api`

@@ -14,7 +14,7 @@ const mssql = new sql.ConnectionPool({
   }
 })
 
-const PORT = 5000
+const PORT = 5001
 
 mssql.connect().then(() => {
   app.listen(PORT, () => {
@@ -251,7 +251,6 @@ app.get('/api/test1-reset', async (req, res) => {
       exec sp_lostupdate_t1 @DonHangID = 'DH101', @TinhTrang = N'Chờ tài xế xác nhận' 
       `
     )
-    console.log("🚀 ~ file: index.js ~ line 65 ~ app.post ~ res", response)
 
     res.send(response.recordset[0])
   } catch (error) {
@@ -268,7 +267,6 @@ app.get('/api/test1-driver', async (req, res) => {
       exec sp_lostupdate_t2 @DonHangID = '${id}', @TinhTrang = N'${status}' 
       `
     )
-    console.log("🚀 ~ file: index.js ~ line 65 ~ app.post ~ res", response)
 
     res.send(response.recordset[0])
 
@@ -287,7 +285,6 @@ app.get('/api/test1-partner', async (req, res) => {
       exec sp_lostupdate_t1 @DonHangID = '${id}', @TinhTrang = N'${status}'  
       `
     )
-    console.log("🚀 ~ file: index.js ~ line 65 ~ app.post ~ res", response)
 
     res.send(response.recordset[0])
 
@@ -366,6 +363,7 @@ app.post('/api/test2-partner', async (req, res) => {
 
     res.send(response.recordset[0])
   } catch (error) {
+    res.sendStatus(500)
     console.log(error)
   }
 })
@@ -457,6 +455,7 @@ app.patch('/api/test3-partner/:id', async (req, res) => {
 
     res.send(product.recordsets[0])  
   } catch (error) {
+    res.sendStatus(500)
     console.log(error)
   }
 })
@@ -558,6 +557,7 @@ app.post('/api/test4-login', async (req, res) => {
     }
 
   } catch (error) {
+    res.sendStatus(500)
     console.log(error)
   }
 })
@@ -582,6 +582,7 @@ app.post('/api/test4-admin', async (req, res) => {
 
   
   } catch (error) {
+    res.sendStatus(500)
     console.log(error)
   }
 })
@@ -676,6 +677,7 @@ app.post('/api/test4-login-fix', async (req, res) => {
     }
 
   } catch (error) {
+    res.sendStatus(500)
     console.log(error)
   }
 })
@@ -686,36 +688,52 @@ app.post('/api/test4-login-fix', async (req, res) => {
 
 
 //TRANS 5
-app.patch('/api/test6-partner', async (req, res) => {
+app.patch('/api/test5-partner', async (req, res) => {
   const data = req.body
   try {
       const partners = await mssql.request().query(
       `
       exec sp_unrepeatableread2_t2 @madt = '${data.id}', @lh = '${data.type}', @tp = '${data.city}' 
       `
-    )
-    res.send(partners.recordsets[0])
+      )
+      const response = await mssql.request().query(
+        `
+        select * from DOITAC DT where DT.DOITACID = '${data.id}' 
+        `
+      )
+    res.send(response.recordsets[0][0])
   } catch (error) {
     console.log(error)
   }
 })
 
-app.get('/api/test6-search', async (req, res) => {
+app.get('/api/test5-search', async (req, res) => {
   const data = req.query
-  console.log("🚀 ~ file: index.js ~ line 691 ~ app.patch ~ data", data)
   try {
       const partners = await mssql.request().query(
       `
       exec sp_unrepeatableread2_t1 @lh = '${data.type}', @tp = '${data.city}' 
       `
     )
-      console.log("🚀 ~ file: index.js ~ line 698 ~ app.patch ~ partners", partners)
     res.send(partners.recordsets[0])
   } catch (error) {
     console.log(error)
   }
 })
 
+app.get('/api/test5-search-fix', async (req, res) => {
+  const data = req.query
+  try {
+      const partners = await mssql.request().query(
+      `
+      exec sp_unrepeatableread2_t1_fix @lh = '${data.type}', @tp = '${data.city}' 
+      `
+    )
+    res.send(partners.recordsets[0])
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 
 
@@ -758,7 +776,7 @@ app.get('/api/test6-staff-view', async (req, res) => {
       `
     )
 
-    res.send(response.recordsets[0])
+    res.send(response.recordsets[1])
 
   
   } catch (error) {
@@ -774,7 +792,7 @@ app.get('/api/test6-staff-view-fix', async (req, res) => {
       `
     )
 
-    res.send(response.recordsets[0])
+    res.send(response.recordsets[1])
 
   
   } catch (error) {
@@ -881,9 +899,3 @@ app.get('/api/test7-customer-view-fix', async (req, res) => {
     console.log(error)
   }
 })
-
-
-
-
-
-

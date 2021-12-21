@@ -17,13 +17,12 @@ import { addProducts, updateProducts } from '../../feature/productsSlice';
 
 function Upload(props) {
 
-    const { id } = useParams();
     const [branchs, setBranchs] = useState([])
     const dispatch = useDispatch()
-    const history = useHistory()
     const user = useSelector((state) => state.user.data)
 
     const [fixed, setFixed] = useState(false)
+    const [delay, setDelay] = useState(false)
 
     const { isError, isSubmit, submitTrigger, onFormChange, watch, handleSubmit, setInitial } = FormManager({
         initialValue: {
@@ -62,21 +61,28 @@ function Upload(props) {
         submitTrigger()
         if (!isError) {
             if (!fixed) {
+                setDelay(true)
+
                 axios.post(`${baseUrl}/api/test2-partner`, {
                     ...data,
                 }).then(
                     (res) => {
                         dispatch(updateProducts(res.data))
+                        setDelay(false)
                     }
-                )
+                ).catch((err) => setDelay(false))
+
             } else {
+                setDelay(true)
+
                 axios.post(`${baseUrl}/api/test2-partner-fix`, {
                     ...data,
                 }).then(
                     (res) => {
                         dispatch(updateProducts(res.data))
+                        setDelay(false)
                     }
-                )
+                ).catch((err) => setDelay(false))
             }
         }
     }
@@ -92,12 +98,6 @@ function Upload(props) {
                 <div className='edit-info'>
 
                     <div className='edit-info__text'>
-                        <CheckBoxInput
-                            label='Fixed dirty read 1'
-                            defaultChecked={fixed}
-                            onChange={(e) => setFixed(e.value)}
-                        />
-
                         <TextInput
                             name='TENSP'
                             label='Tên sản phẩm'
@@ -114,7 +114,7 @@ function Upload(props) {
                             name='GIA'
                             label='Giá'
                             onChange={onFormChange}
-
+                            positive
 
                             required
                             isSubmit={isSubmit}
@@ -137,7 +137,7 @@ function Upload(props) {
                         <div className='prodcut-card__btn--wrapper'
                             onClick={() => handleSubmit(onSubmit)}
                         >
-                            Thêm
+                            {!delay ? 'Thêm' : 'Đang thêm'}
                         </div>
                     </div>
                 </div>

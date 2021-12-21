@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SelectInput } from '../../Components/CustomForm/CustomForm';
 import Grid from '@mui/material/Grid'
 import ProductCard from '../../Components/ProductCard/ProductCard';
-import { CheckBoxInput } from './../../Components/CustomForm/CustomForm';
+import { CheckBoxInput, FormManager } from './../../Components/CustomForm/CustomForm';
 
 function Customer(props) {
     const dispatch = useDispatch()
@@ -18,6 +18,12 @@ function Customer(props) {
 
     const [fixed2, setFixed2] = useState(false)
     const [fixed, setFixed] = useState(false)
+
+    const { isError, isSubmit, submitTrigger } = FormManager({
+        inittialValue: {
+
+        }
+    })
 
     useEffect(() => {
         try {
@@ -41,6 +47,7 @@ function Customer(props) {
     }, [])
 
     const getProducts = () => {
+        submitTrigger()
         if (!delay) {
             if (!fixed) {
                 try {
@@ -50,7 +57,7 @@ function Customer(props) {
                         }
                     }).then(
                         (res) => {
-                            setProducts(res.data)
+                            setProducts(res.data || [])
                         }
                     )
                 } catch (error) {
@@ -64,7 +71,7 @@ function Customer(props) {
                         }
                     }).then(
                         (res) => {
-                            setProducts(res.data)
+                            setProducts(res.data || [])
                         }
                     )
                 } catch (error) {
@@ -81,7 +88,7 @@ function Customer(props) {
                         }
                     }).then(
                         (res) => {
-                            setProducts(res.data)
+                            setProducts(res.data || [])
                             setLoading(false)
                         }
                     )
@@ -97,7 +104,7 @@ function Customer(props) {
                         }
                     }).then(
                         (res) => {
-                            setProducts(res.data)
+                            setProducts(res.data || [])
                             setLoading(false)
                         }
                     )
@@ -136,7 +143,8 @@ function Customer(props) {
                     onChange={(e) => setChoose(e.value)}
 
                     required
-                    isSubmit={true}
+                    isError={isError}
+                    isSubmit={isSubmit}
                 />
             </div>
 

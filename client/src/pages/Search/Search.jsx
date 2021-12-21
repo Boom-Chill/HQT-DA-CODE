@@ -8,43 +8,7 @@ import { addProducts } from '../../feature/productsSlice';
 import './Search.scss'
 
 function Search(props) {
-    const dispatch = useDispatch()
-    const [page, setPage] = useState(1)
-    const [partners, setPartners] = useState([])
-    const products = useSelector((state) => state.products.data)
-    const search = useSelector((state) => state.products.search)
-
-    useEffect(() => {
-        try {
-            axios.get(`${baseUrl}/api/search`, {
-                params: {
-                    page: page,
-                    search: search,
-                }
-            }).then(
-                (res) => dispatch(addProducts(res.data))
-            )
-        } catch (error) {
-            console.log(error)
-        }
-    }, [search])
-
-    const handleAddProduct = () => {
-        setPage(page + 1)
-        try {
-            axios.get(`${baseUrl}/api/search`, {
-                params: {
-                    page: page + 1,
-                    search: search,
-                }
-            }).then(
-                (res) => dispatch(addProducts([...products, ...res.data]))
-            )
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
+    const partners = useSelector((state) => state?.partners?.data || [])
     return (
         <div className='search wide'>
             <Grid container spacing={2}>
@@ -59,7 +23,6 @@ function Search(props) {
                     {
                         partners.map((ele) => (
                             <>
-
                                 <tr>
                                     <td>{ele.DOITACID}</td>
                                     <td>{ele.THANHPHO}</td>

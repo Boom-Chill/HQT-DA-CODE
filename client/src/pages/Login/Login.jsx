@@ -33,7 +33,7 @@ function Login(props) {
     const onSubmit = (data) => {
         if (!isError) {
             if (!delay) {
-
+                setLoading(true)
                 axios.post(`${baseUrl}/api/auth/login`, {
                     USERNAME: data.USERNAME,
                     USERPASSWORD: data.USERPASSWORD,
@@ -42,14 +42,16 @@ function Login(props) {
                     (res) => {
                         if (res.data.error) {
                             setMess(res.data.message)
+                            setLoading(false)
                         } else {
                             setMess(null)
                             console.log(res.data.data)
                             dispatch(addUser(res.data.data))
+                            setLoading(false)
                             history.push('/')
                         }
                     }
-                )
+                ).catch(() => setLoading(false))
             } else {
                 if (!fixed) {
                     setLoading(true)
@@ -61,6 +63,7 @@ function Login(props) {
                         (res) => {
                             if (res.data.error) {
                                 setMess(res.data.message)
+                                setLoading(false)
                             } else {
                                 setMess(null)
                                 console.log(res.data.data)
@@ -69,7 +72,7 @@ function Login(props) {
                                 history.push('/')
                             }
                         }
-                    )
+                    ).catch(() => setLoading(false))
                 } else {
                     setLoading(true)
                     axios.post(`${baseUrl}/api/test4-login-fix`, {
@@ -80,6 +83,7 @@ function Login(props) {
                         (res) => {
                             if (res.data.error) {
                                 setMess(res.data.message)
+                                setLoading(false)
                             } else {
                                 setMess(null)
                                 console.log(res.data.data)
@@ -88,7 +92,7 @@ function Login(props) {
                                 history.push('/')
                             }
                         }
-                    )
+                    ).catch(() => setLoading(false))
                 }
             }
 
@@ -104,8 +108,6 @@ function Login(props) {
                 LOGIN
             </h1>
 
-            <img src="https://i.ibb.co/mGctynB/accounts.png" alt="" />
-
             <div>
                 {mess ? <ErrorMessage errorMessage={mess} /> : ''}
 
@@ -113,13 +115,13 @@ function Login(props) {
 
 
             <CheckBoxInput
-                label='delay 5s (test 4 unrepeatableread1_t1)'
+                label='delay 5s (unrepeatable read 1 )'
                 defaultChecked={delay}
                 onChange={(e) => setDelay(e.value)}
             />
 
             <CheckBoxInput
-                label='Fixed'
+                label='Fixed unrepeatable read'
                 defaultChecked={fixed}
                 onChange={(e) => setFixed(e.value)}
             />

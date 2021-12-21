@@ -18,6 +18,7 @@ function Admin(props) {
     const [status, setStatus] = useState('')
     const [options, setOptions] = useState([])
     const [reload, setLoad] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     const { isError, isSubmit, submitTrigger, onFormChange, watch, handleSubmit } = FormManager({
         initialValue: {
@@ -29,13 +30,15 @@ function Admin(props) {
     const onSubmit = (data) => {
         submitTrigger()
         if (!isError) {
+            setLoading(true)
             axios.post(`${baseUrl}/api/test4-admin`, {
                 ...data,
             }).then(
                 (res) => {
                     setUsers(res.data)
+                    setLoading(false)
                 }
-            )
+            ).catch(() => setLoading(false))
         }
     }
 
@@ -136,7 +139,7 @@ function Admin(props) {
                     <div className='prodcut-card__btn--wrapper'
                         onClick={() => handleSubmit(onSubmit)}
                     >
-                        SỬA
+                        {loading ? 'Đang sửa....' : 'Sửa'}
                     </div>
                 </div>
             </div>

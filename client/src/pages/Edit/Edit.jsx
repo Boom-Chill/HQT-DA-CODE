@@ -63,7 +63,7 @@ function Edit(props) {
                     console.log(res.data[0])
                     setReload(false)
                 }
-            )
+            ).catch(() => setReload(false))
         }
     }
 

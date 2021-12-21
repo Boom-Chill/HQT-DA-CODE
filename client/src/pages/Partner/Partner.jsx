@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import './Partner.scss'
 import { TextInput } from './../../Components/CustomForm/CustomForm';
+import { addUser } from '../../feature/userSlice';
 
 function Partner(props) {
     const dispatch = useDispatch()
@@ -30,7 +31,6 @@ function Partner(props) {
                     id: user.info.DOITACID,
                 }
             }).then(
-                //(res) => console.log(res.data)
                 (res) => dispatch(addPartnerProducts(res.data))
             )
         } catch (error) {
@@ -54,12 +54,18 @@ function Partner(props) {
 
     const change = () => {
         try {
-            axios.patch(`${baseUrl}/api/test6-partner`, {
+            axios.patch(`${baseUrl}/api/test5-partner`, {
                 id: user.info.DOITACID,
                 city: user.info.THANHPHO,
                 type: type,
 
-            })
+            }).then((res) => dispatch(addUser({
+                ...user,
+                info: {
+                    ...user.info,
+                    LOAIHANG: res.data.LOAIHANG
+                }
+            })))
         } catch (error) {
             console.log(error)
         }
@@ -67,7 +73,12 @@ function Partner(props) {
 
     return (
         <div className='admin wide'>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'center', marginBottom: '16px' }}>
+
+                <div style={{ marginRight: '24px', fontSize: '24px' }}>
+                    Loại hàng hiện tại: {user.info.LOAIHANG}
+                </div>
+
 
                 <TextInput
                     label='Cập nhật loại hàng'
@@ -75,6 +86,7 @@ function Partner(props) {
                 />
 
                 <div className='admin-card__btn--wrapper'
+                    style={{ marginLeft: '16px' }}
                     onClick={() => change()}
                 >
                     <div

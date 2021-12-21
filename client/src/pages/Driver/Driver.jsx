@@ -139,6 +139,7 @@ function Driver(props) {
             <div className='driver__btn--container' style={{ alignItems: 'end' }}>
 
                 <TextInput
+                    style={{ marginRight: '16px' }}
                     label='Mã đơn hàng'
                     onChange={(e) => setId(e.value)}
                 />

@@ -51,7 +51,7 @@ export const TextInput = (props) => {
         label, labelClassName,
 
         name, className, defaultValue, onChange,
-        type,
+        type, style,
 
         validate, minLength, maxLength, email,
 
@@ -125,7 +125,7 @@ export const TextInput = (props) => {
     }, [disabled])
 
     return (
-        <div className="custom-from__input">
+        <div className="custom-from__input" style={{ ...style }}>
             <div className={labelClassName ? labelClassName : "custom-from__input-label"}>{label}</div>
 
             <input
